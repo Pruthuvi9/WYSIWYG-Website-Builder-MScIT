@@ -1,62 +1,88 @@
 import { useEffect, useRef, useState } from "react";
 import grapesjs from "grapesjs";
 
+import { Template } from "./Template";
 import "./App.css";
 import "grapesjs/dist/css/grapes.min.css";
 
 function App() {
-  const editor = grapesjs.init({
-    // Indicate where to init the editor. You can also pass an HTMLElement
-    container: "#gjs",
-    // Get the content for the canvas directly from the element
-    // As an alternative we could use: `components: '<h1>Hello World Component!</h1>'`,
-    fromElement: true,
-    // Size of the editor
-    height: "300px",
-    width: "auto",
-    // Disable the storage manager for the moment
-    storageManager: false,
-    // Avoid any default panel
-    panels: { defaults: [] },
-    blockManager: {
-      appendTo: "#blocks",
-      blocks: [
-        {
-          id: "section", // id is mandatory
-          label: "<b>Section</b>", // You can use HTML/SVG inside labels
-          attributes: { class: "gjs-block-section" },
-          content: `<section>
-            <h1>This is a simple title</h1>
-            <div>This is just a Lorem text: Lorem ipsum dolor sit amet</div>
-          </section>`,
+  const [editor, setEditor] = useState(null);
+  const editorRef = useRef(null);
+
+  useEffect(() => {
+    if (!editorRef.current) {
+      const editorInstance = grapesjs.init({
+        container: "#gjs",
+        fromElement: false,
+        // height: "100%",
+        // width: "auto",
+        storageManager: false,
+        blockManager: {
+          appendTo: "#blocks",
         },
-        {
-          id: "text",
-          label: "Text",
-          content: '<div data-gjs-type="text">Insert your text here</div>',
+        panels: {
+          defaults: [
+            {
+              id: "panel-devices",
+              el: ".panel_devices",
+              buttons: [],
+            },
+          ],
         },
-        {
-          id: "image",
-          label: "Image",
-          // Select the component once it's dropped
-          select: true,
-          // You can pass components as a JSON instead of a simple HTML string,
-          // in this case we also use a defined component type `image`
-          content: { type: "image" },
-          // This triggers `active` event on dropped components and the `image`
-          // reacts by opening the AssetManager
-          activate: true,
+        canvas: {
+          styles: ["./grapes.css"],
         },
-      ],
-    },
-  });
+      });
+
+      editorInstance.BlockManager.add("box-block", {
+        label: "Box",
+        content: {
+          type: "Box",
+          components: [],
+          attributes: { class: "box-block" },
+        },
+        category: "Components",
+      });
+
+      editorInstance.BlockManager.add("text-block", {
+        label: "Text",
+        content: {
+          type: "Text",
+          content: "Text",
+        },
+        category: "Components",
+      });
+
+      const savedContent = JSON.parse(localStorage.getItem("MyPage"));
+      if (savedContent) {
+        editorInstance.setComponents(savedContent.components);
+      }
+
+      editorRef.current = editorInstance;
+      setEditor(editorInstance);
+    }
+  }, []);
+
+  const handleSave = () => {
+    if (editorRef.current) {
+      const components = editorRef.current.getComponents();
+      const savedContent = {
+        components: components.toJSON(),
+      };
+      localStorage.setItem("MyPage", JSON.stringify(savedContent));
+    }
+  };
 
   return (
-    <div className="webBuilderApp">
-      <div id="gjs">
-        <h1>Hello World Component!</h1>
+    <div className="WebBuilderApp">
+      <button onClick={handleSave}>Save</button>
+      <div className="Editor">
+        <div id="blocks">
+          <span>My Custom Blocks</span>
+        </div>
+        <div id="gjs" />
+        <Template />
       </div>
-      <div id="blocks"></div>
     </div>
   );
 }
