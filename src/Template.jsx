@@ -52,13 +52,7 @@ const Template = () => {
         </Box>
       );
     } else if (component.type === "Text") {
-      return (
-        <Text>
-          {component.components?.map((child, index) => (
-            <div key={index}>{renderComponent(child)}</div>
-          ))}
-        </Text>
-      );
+      return <Text content={component.content} />;
     }
     return null;
   };

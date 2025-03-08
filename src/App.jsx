@@ -20,15 +20,15 @@ function App() {
         blockManager: {
           appendTo: "#blocks",
         },
-        panels: {
-          defaults: [
-            {
-              id: "panel-devices",
-              el: ".panel_devices",
-              buttons: [],
-            },
-          ],
-        },
+        // panels: {
+        //   defaults: [
+        //     {
+        //       id: "panel-devices",
+        //       el: ".panel_devices",
+        //       buttons: [],
+        //     },
+        //   ],
+        // },
         canvas: {
           styles: ["./grapes.css"],
         },
@@ -48,7 +48,7 @@ function App() {
         label: "Text",
         content: {
           type: "Text",
-          content: "Text",
+          content: "Hello",
         },
         category: "Components",
       });
@@ -81,8 +81,8 @@ function App() {
           <span>My Custom Blocks</span>
         </div>
         <div id="gjs" />
-        <Template />
       </div>
+      <Template />
     </div>
   );
 }
