@@ -14,6 +14,19 @@ const Box = ({ style, children }) => {
   );
 };
 
+const Section = () => {
+  return (
+    <div
+      style={{
+        ...style,
+      }}
+      className="flex flex-row"
+    >
+      {content}
+    </div>
+  );
+};
+
 const Text = ({ style, content }) => {
   return (
     <div
@@ -29,4 +42,4 @@ const Text = ({ style, content }) => {
   );
 };
 
-export { Box, Text };
+export { Box, Section, Text };

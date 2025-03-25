@@ -19,21 +19,53 @@ function App() {
         storageManager: false,
         blockManager: {
           appendTo: "#blocks",
+          blocks: [
+            {
+              id: "section", // id is mandatory
+              label: "<b>Section</b>", // You can use HTML/SVG inside labels
+              attributes: { class: "gjs-block-section" },
+              content: `<section>
+                <h1>This is a simple title</h1>
+                <div>This is just a Lorem text: Lorem ipsum dolor sit amet</div>
+              </section>`,
+            },
+            {
+              id: "text",
+              label: "Text",
+              content: '<div data-gjs-type="text">Insert your text here</div>',
+            },
+            {
+              id: "image",
+              label: "Image",
+              // Select the component once it's dropped
+              select: true,
+              // You can pass components as a JSON instead of a simple HTML string,
+              // in this case we also use a defined component type `image`
+              content: { type: "image" },
+              // This triggers `active` event on dropped components and the `image`
+              // reacts by opening the AssetManager
+              activate: true,
+            },
+          ],
         },
-        // panels: {
-        //   defaults: [
-        //     {
-        //       id: "panel-devices",
-        //       el: ".panel_devices",
-        //       buttons: [],
-        //     },
-        //   ],
-        // },
+        panels: {
+          defaults: [],
+        },
         canvas: {
           styles: ["./grapes.css"],
         },
       });
 
+      editorInstance.BlockManager.add("box-block", {
+        label: "Section",
+        content: {
+          type: "Section",
+          components: [],
+          attributes: { class: "section" },
+        },
+        category: "Components",
+      });
+      
       editorInstance.BlockManager.add("box-block", {
         label: "Box",
         content: {
@@ -74,13 +106,15 @@ function App() {
   };
 
   return (
-    <div className="WebBuilderApp">
-      <button onClick={handleSave}>Save</button>
-      <div className="Editor">
-        <div id="blocks">
+    <div className="WebBuilderApp w-screen bg-black">
+      <button className="text-white bg-sky-500/100 px-5 py-1 rounded-full" onClick={handleSave}>
+        Save
+      </button>
+      <div className="Editor flex flex-row w-full">
+        <div id="blocks" className="flex-1 p-4 bg-white">
           <span>My Custom Blocks</span>
         </div>
-        <div id="gjs" />
+        <div id="gjs" className="box-border grow-[7]" />
       </div>
       <Template />
     </div>

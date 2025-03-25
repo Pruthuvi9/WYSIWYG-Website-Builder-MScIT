@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Box, Text } from "./components/customBlocks";
+import { Box, Section, Text } from "./components/customBlocks";
 import "./App.css";
 
 const Template = () => {
@@ -24,6 +24,14 @@ const Template = () => {
       );
     } else if (component.type === "Text") {
       return <Text content={component.content} />;
+    } else if (component.type === "Section") {
+      return (
+        <Section>
+          {component.components?.map((child, index) => (
+            <div key={index}>{renderComponent(child)}</div>
+          ))}
+        </Section>
+      );
     }
     return null;
   };
