@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
-import { pageSchema } from "./page.js"; // make sure you export it
+import { pageSchema } from "./page.js";
 
 const { Schema, model } = mongoose;
 
 const projectSchema = new Schema({
   name: String,
-  pages: [pageSchema], // use schema here, not the model
+  pages: [pageSchema],
   createdAt: { type: Date, default: Date.now },
 });
 

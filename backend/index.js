@@ -18,7 +18,6 @@ const app = express();
 const { json } = bodyParser;
 const PORT = 5000;
 
-// dotenv.config();
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -28,7 +27,6 @@ app.use(
 );
 app.use(json());
 app.use(express.static("exports"));
-// app.use(express.static("uploads")); 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Connect to MongoDB

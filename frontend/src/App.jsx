@@ -28,9 +28,11 @@ function App() {
 
       const data = await response.json();
       console.log("Project created:", data.project);
+      window.alert("Project created.");
       return data.project;
     } catch (error) {
       console.error("Error creating project:", error);
+      window.alert("Error creating project.");
     }
   };
 
@@ -56,19 +58,16 @@ function App() {
       <MainHeader />
       <main>
         <PageTitle>Dashboard</PageTitle>
-        <div className="flex flex-col p-6 gap-1">
+        <div className="flex p-6 gap-1">
           <button onClick={openFormHandler} className="bg-blue-800 text-white rounded-md p-2">
             Create new project
           </button>
           <a className="bg-blue-800 text-white rounded-md p-2" href="/projects">
-            All projects
+            Show all projects
           </a>
         </div>
         {showForm && (
-          <div
-            onClick={closeFormHandler}
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm"
-          >
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm">
             <form onSubmit={submitHandler} className="bg-white p-6 rounded-md flex flex-col gap-4 w-96">
               <h2 className="text-2xl font-semibold mb-2">Create Project</h2>
 

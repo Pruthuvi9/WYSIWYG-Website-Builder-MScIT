@@ -38,10 +38,6 @@ function Editor() {
         },
       });
 
-      editorInstance.on("asset:upload:response", (response) => {
-        console.log(response);
-      });
-
       editorInstance.on("asset:open", async () => {
         if (editorInstance.AssetManager.getAll().length === 0) {
           // Only load once
@@ -288,8 +284,10 @@ function Editor() {
       const data = await res.json();
       if (res.ok) {
         console.log("Page saved successfully!", data);
+        window.alert("Page saved successfully!", data);
       } else {
         console.error("Failed to save page:", data.error);
+        window.alert("Failed to save page.");
       }
     } catch (error) {
       console.error("Error while saving:", error);
@@ -361,18 +359,18 @@ function Editor() {
   return (
     <>
       <MainHeader />
-      <div className="WebBuilderApp w-screen bg-black">
-        <div className="flex">
+      <div className="WebBuilderApp bg-black">
+        <div className="flex p-3">
           <button className="text-white bg-sky-500/100 px-5 py-1 rounded-full" onClick={savePageToProject}>
             Save
           </button>
-          <button className="text-white bg-green-500 px-5 py-1 rounded-full ml-2" onClick={handlePreview}>
+          <button className="text-white bg-green-600 px-5 py-1 rounded-full ml-2" onClick={handlePreview}>
             Preview
           </button>
-          <button className="text-white bg-green-500 px-5 py-1 rounded-full ml-2" onClick={undoChange}>
+          <button className="text-white bg-gray-600 px-5 py-1 rounded-full ml-2" onClick={undoChange}>
             Undo
           </button>
-          <button className="text-white bg-green-500 px-5 py-1 rounded-full ml-2" onClick={redoChange}>
+          <button className="text-white bg-gray-600 px-5 py-1 rounded-full ml-2" onClick={redoChange}>
             Redo
           </button>
         </div>

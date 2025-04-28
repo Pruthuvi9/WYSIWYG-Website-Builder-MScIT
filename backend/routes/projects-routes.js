@@ -38,7 +38,7 @@ router.post("/", async (req, res) => {
   try {
     const newProject = new Project({
       name,
-      pages: [], // start with no pages
+      pages: [],
     });
 
     await newProject.save();
@@ -140,7 +140,7 @@ router.delete("/:projectId/pages/:pageName", async (req, res) => {
     const pageIndex = project.pages.findIndex((p) => p.name === pageName);
     if (pageIndex === -1) return res.status(404).json({ error: "Page not found" });
 
-    project.pages.splice(pageIndex, 1); // Remove the page from the array
+    project.pages.splice(pageIndex, 1);
 
     await project.save();
 
