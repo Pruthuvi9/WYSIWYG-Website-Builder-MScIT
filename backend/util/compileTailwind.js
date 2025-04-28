@@ -2,7 +2,7 @@ import { writeFileSync, readFileSync } from "fs";
 import { execSync } from "child_process";
 import path from "path";
 
-export const compileTailwind = (htmlContent, inputCssPath = "./index.css", outputDir = "./exports") => {
+export const compileTailwind = (htmlContent, inputCssPath = "index.css", outputDir = "./exports") => {
   const tempHtmlPath = path.join(outputDir, "exported.html");
   const outputCssPath = path.join(outputDir, "output.css");
 
